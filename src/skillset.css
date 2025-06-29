@@ -1,0 +1,104 @@
+/* --- Skillset Panel Styles --- */
+.skillset-overlay {
+	position: fixed;
+	inset: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 50;
+	display: flex;
+	justify-content: flex-end;
+	animation: overlay-fade-in 0.5s ease;
+}
+
+.skillset-panel {
+	width: 100%;
+	max-width: 420px;
+	height: 100%;
+	background-color: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+	border-left: 1px solid var(--card-border);
+	box-shadow: -10px 0 30px -15px var(--shadow);
+	display: flex;
+	flex-direction: column;
+	animation: panel-slide-in 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skillset-panel-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1.5rem;
+	border-bottom: 1px solid var(--card-border);
+    flex-shrink: 0;
+}
+
+.skillset-panel-title {
+	font-family: var(--font-mono);
+	font-size: 1.25rem;
+	font-weight: 600;
+	margin: 0;
+    color: var(--primary);
+}
+
+.skillset-panel-close {
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: var(--muted-fg);
+	padding: 0;
+    transition: color 0.2s;
+}
+.skillset-panel-close:hover {
+	color: var(--primary);
+}
+
+.skillset-panel-content {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.skillset-section {
+    margin-bottom: 2rem;
+}
+
+.skillset-category-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    color: var(--fg);
+}
+
+.skillset-category-icon {
+    color: var(--primary);
+}
+
+.skillset-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skillset-tag {
+    background-color: var(--muted-fg);
+    color: var(--bg);
+    font-size: 0.875rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+}
+
+
+/* --- Animations --- */
+@keyframes overlay-fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes panel-slide-in {
+	from { transform: translateX(100%); }
+	to { transform: translateX(0); }
+}
