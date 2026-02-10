@@ -143,6 +143,7 @@ const App = () => {
   const [clickEffects, setClickEffects] = useState([]);
   const containerRef = useRef(null);
   const toneSynths = useRef({});
+  const clickTimeoutsRef = useRef([]);
 
   const toggleMute = () => {
       setIsMuted(prev => !prev);
@@ -176,6 +177,10 @@ const App = () => {
     };
 
     const initializeSynths = () => {
+      if (!window.Tone) {
+        console.warn('Tone.js not available, skipping synth initialization');
+        return;
+      }
       toneSynths.current = {
         // Metal Red: Deep metallic ping (sonar-like)
         metalPing: new window.Tone.MetalSynth({
@@ -255,8 +260,8 @@ const App = () => {
     };
 
     const handleClick = (e) => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      if (!currentTheme) return;
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'cyber-matcha-dark';
+
 
       const id = Date.now();
 
@@ -278,17 +283,17 @@ const App = () => {
       }
 
       // Add visual effect using React state (always show, regardless of mute)
-      setClickEffects(prev => [...prev, {
-        id,
-        x: e.clientX,
-        y: e.clientY,
-        type: currentTheme
-      }]);
+      // Cap at 20 simultaneous effects to prevent performance issues from rapid clicking
+      setClickEffects(prev => {
+        const next = [...prev, { id, x: e.clientX, y: e.clientY, type: currentTheme }];
+        return next.length > 20 ? next.slice(-20) : next;
+      });
 
       // Remove effect after animation duration
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         setClickEffects(prev => prev.filter(effect => effect.id !== id));
       }, 700);
+      clickTimeoutsRef.current.push(timeoutId);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -297,6 +302,8 @@ const App = () => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('click', handleClick);
+      clickTimeoutsRef.current.forEach(clearTimeout);
+      clickTimeoutsRef.current = [];
     };
   }, [isMuted]);
 

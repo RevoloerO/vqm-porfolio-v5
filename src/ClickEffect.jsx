@@ -51,6 +51,15 @@ const ClickEffect = ({ id, x, y, type }) => {
     );
   }
 
+  if (type.includes('blockchain-blue')) {
+    return (
+      <div
+        className="digital-pulse"
+        style={{ left: `${x}px`, top: `${y}px` }}
+      />
+    );
+  }
+
   return null;
 };
 

@@ -73,3 +73,36 @@
     transform: translate(-50%, -50%) translate(var(--random-x), var(--random-y)) scale(0);
   }
 }
+
+/* Digital pulse effect for blockchain-blue theme */
+.digital-pulse {
+  position: fixed;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(48, 128, 255, 0.5), transparent);
+  border: 2px solid #3080FF;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  animation: digitalPulse 0.7s ease-out forwards;
+  box-shadow: 0 0 8px rgba(48, 128, 255, 0.6);
+}
+
+@keyframes digitalPulse {
+  0% {
+    width: 16px;
+    height: 16px;
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(48, 128, 255, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(48, 128, 255, 0.4);
+  }
+  100% {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(48, 128, 255, 0);
+  }
+}
